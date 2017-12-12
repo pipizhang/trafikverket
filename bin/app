@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+$:.unshift File.expand_path('../../lib', __FILE__)
+require 'commander'
+require 'trafikverket'
+require 'terminal-table'
+require 'time'
+
+class MyApp
+  include Commander::Methods
+
+  @@times = 0
+
+  def run
+    program :name, 'Trafikverket'
+    program :version, Trafikverket::VERSION
+    program :description, 'Monitor available Swedish driving test and get notified when there are new recent test come up '
+    default_command :help
+
+    command :run do |c|
+      c.syntax = 'app run'
+      c.description = 'Run monitor'
+      c.option '--interval SECONDS', Integer, 'Interval in seconds'
+      c.action do |args, options|
+        options.default \
+          :interval => 60,
+          :week => 2
+
+        _interval = [30, options.interval].max
+        _week = [1, options.week].max
+        while true do 
+          @@times = @@times + 1
+          client = Trafikverket::Client.new(File.expand_path('../../config/curl.txt', __FILE__))
+          client.request()
+          _print_table(client)
+          sleep(_interval)
+        end
+      end
+    end
+
+    command :show do |c|
+      c.syntax = 'app show'
+      c.description = 'Only displays the earlest of available drving test'
+      c.action do |args, options|
+        client = Trafikverket::Client.new(File.expand_path('../../config/curl.txt', __FILE__))
+        client.request()
+        _print_table(client)
+      end
+
+    end
+
+    run!
+  end
+
+  def _print_table(client)
+    rows = []
+    n = 1
+    client.get_all().each do |v|
+      rows << [n, v[:TEST_KNOWLEGE].info, v[:TEST_KNOWLEGE].in_weeks, v[:TEST_DRIVING].info, v[:TEST_DRIVING].in_weeks]
+      n = n + 1
+    end
+    table = Terminal::Table.new :headings => ['ID', 'Knowlege', 'Weeks', 'Driving', 'Weeks'], :rows => rows
+
+    puts "\e[H\e[2J"
+    puts "Fetch update ... [TIME #{Time.now}]" << (@@times > 0 ? " [REQUESTS #{@@times}]" : "")
+    puts table
+    puts ""
+  end
+
+end
+
+MyApp.new.run if $0 == __FILE__
+
+
