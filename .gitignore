@@ -1,0 +1,8 @@
+# common
+.bundle
+*.sw?
+Gemfile.lock
+
+# app
+config/config.yml
+config/curl.txt
