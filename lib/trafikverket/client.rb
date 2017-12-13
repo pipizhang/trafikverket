@@ -33,6 +33,9 @@ module Trafikverket
 
     def _parse(content)
       begin
+        # reset data
+        @occasions = []
+
         json = JSON.parse(content)
         json['data'].each do |v|
           vv = v['occasions']
