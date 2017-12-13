@@ -19,7 +19,7 @@ module Trafikverket
       @occasions = []
     end
 
-    def request()
+    def request
       reponse = ""
       ::Open3.popen3(@curl) do |stdin, stdout, stderr, wait_thr|
         reponse = stdout.read
@@ -48,7 +48,7 @@ module Trafikverket
       end
     end
 
-    def get_all()
+    def get_all
       @occasions
     end
 

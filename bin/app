@@ -17,7 +17,7 @@ class MyApp
 
     program :name, 'Trafikverket'
     program :version, Trafikverket::VERSION
-    program :description, 'Monitor available Swedish driving test and get notified when there are new recent test come up '
+    program :description, 'Monitor available Swedish driving test and get notified when there are new recent tests come up'
     default_command :help
 
     command :run do |c|
@@ -51,7 +51,7 @@ class MyApp
 
     command :show do |c|
       c.syntax = 'app show'
-      c.description = 'Only displays the earlest of available drving test'
+      c.description = 'Only displays the earlest of available driving tests'
       c.action do |args, options|
         @client = Trafikverket::Client.new(Trafikverket::Config.curl_file)
         @client.request

@@ -22,11 +22,11 @@ module Trafikverket
       Date.parse(@date) <= date
     end
 
-    def info()
+    def info
       return "#{@date} #{@time} (#{@location})"
     end
 
-    def in_weeks()
+    def in_weeks
       days = (Date.parse(@date) - Date.today).to_i
       return (days.to_f / 7).ceil
     end
