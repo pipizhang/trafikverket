@@ -4,5 +4,5 @@
 Gemfile.lock
 
 # app
-config/config.yml
-config/curl.txt
+config/.env
+config/curl
