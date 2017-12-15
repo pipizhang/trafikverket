@@ -90,7 +90,7 @@ class MyApp
 
     if list.length > 0
       s = Trafikverket::Slack.new ENV['SLACK_TOKEN'], ENV['SLACK_CHANNELS']
-      msg = ["Found new examinations"]
+      msg = ["Found new examinations <!channel>"]
       list.each do |v|
         msg << "knowlege: #{v[:TEST_KNOWLEGE].info}    driving: #{v[:TEST_DRIVING].info}"
       end
