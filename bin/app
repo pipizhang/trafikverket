@@ -28,7 +28,7 @@ class MyApp
       c.action do |args, options|
         options.default \
           :interval => 60,
-          :week => 2
+          :week => 4
 
         # parse args
         _interval = [30, options.interval].max
