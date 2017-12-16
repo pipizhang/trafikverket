@@ -1,0 +1,12 @@
+version: "3"
+services:
+    app:
+        image: ruby:2.4
+        container_name: trafikverket
+        hostname: trafikverket
+        stdin_open: true
+        tty: true
+        working_dir: /app
+        command: /bin/bash
+        volumes:
+            - .:/app
