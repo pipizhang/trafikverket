@@ -1,13 +1,19 @@
-.PHONY: install show run docker
+SHELL := /bin/bash
 
-install:
-	@bundle install
+.PHONY: help install show run docker
 
-show:
+help: ## This help message
+	@echo "usage: make [target]"
+	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m: \2/')"
+
+install: ## Install gems
+	@exec bundle install
+
+show: ## Execute 'show' command
 	@exec bin/app show
 
-run:
+run: ## Execute 'run' command
 	@exec bin/app run
 
-docker:
+docker: ## Start a docker container
 	@exec docker-compose run --rm --name trafikverket app
