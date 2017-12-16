@@ -1,4 +1,4 @@
-.PHONY: install show run
+.PHONY: install show run docker
 
 install:
 	@bundle install
@@ -8,3 +8,6 @@ show:
 
 run:
 	@exec bin/app run
+
+docker:
+	@exec docker-compose run --rm --name trafikverket app
