@@ -1,34 +1,30 @@
 # coding: utf-8
 require 'json'
 require 'open3'
+require 'excon'
 
 module Trafikverket
 
   class Client
 
-    def initialize(curl_file)
-      # verfiy curl file
-      if !File.exist?(curl_file)
-        raise RuntimeError.new("Not found file #{curl_file}")
-      end
-      @curl = File.read(curl_file).strip
-      if !@curl.include? "curl" or !@curl.include? "Cookie"
-        raise RuntimeError.new("Invalid curl file")
-      end
-
+    def initialize(user_agent)
       @occasions = []
+      @endpoint = "https://fp.trafikverket.se/Boka/occasion-bundles"
+      @user_agent = user_agent
     end
 
-    def request
-      reponse = ""
-      ::Open3.popen3(@curl) do |stdin, stdout, stderr, wait_thr|
-        reponse = stdout.read
-        error = stderr.read
-      end
-      if !reponse
-        return
-      end
-      _parse(reponse)
+    def request(post_data)
+      response = Excon.post(
+        @endpoint,
+        :body => post_data,
+        :headers => {
+          "Content-Type" => "application/json",
+          "X-Requested-With" => "XMLHttpRequest",
+          "User-Agent" => @user_agent
+        }
+      )
+      raw = response.status == 200 ? response.body : ""
+      _parse(raw)
     end
 
     def _parse(content)

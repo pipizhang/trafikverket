@@ -1,11 +1,12 @@
 # coding: utf-8
 
 module Trafikverket
-  VERSION = "1.0"
+  VERSION = "1.1"
 end
 
-require "trafikverket/config"
-require "trafikverket/client"
-require "trafikverket/model"
-require "trafikverket/slack"
+require_relative "trafikverket/client"
+require_relative "trafikverket/config"
+require_relative "trafikverket/form"
+require_relative "trafikverket/model"
+require_relative "trafikverket/slack"
 
