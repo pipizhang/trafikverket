@@ -23,7 +23,7 @@ module Trafikverket
     end
 
     def get_person_id(str)
-      if !str.match? /^\d{8}[\-]{0,1}\d{4}$/
+      if !str =~ /^\d{8}[\-]{0,1}\d{4}$/
         raise RuntimeError.new "Invalid person id number(format example '19990101-0001')"
       end
 
