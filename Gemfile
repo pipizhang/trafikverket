@@ -3,5 +3,6 @@ source "https://rubygems.org"
 
 gem "commander"
 gem "dotenv"
-gem "terminal-table"
+gem "excon"
 gem "slack-ruby-client"
+gem "terminal-table"
