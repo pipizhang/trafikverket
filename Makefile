@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: help install show run docker
+.PHONY: help install show run test docker
 
 help: ## This help message
 	@echo "usage: make [target]"
@@ -14,6 +14,9 @@ show: ## Execute 'show' command
 
 run: ## Execute 'run' command
 	@exec bin/app run
+
+test: ## Run tests
+	@exec rspec spec
 
 docker: ## Start a docker container
 	@exec docker-compose run --rm --name trafikverket app
