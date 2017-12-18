@@ -33,14 +33,21 @@ module Trafikverket
         @occasions = []
 
         json = JSON.parse(content)
+
+        if json['status'] != 200
+          raise RuntimeError.new "Server return #{json['status']}, plsease check your input"
+        end
+
         json['data'].each do |v|
           vv = v['occasions']
           tk = Examination.new(TEST_KNOWLEGE, vv[0]['date'], vv[0]['time'], vv[0]['locationName'])
           td = Examination.new(TEST_DRIVING, vv[1]['date'], vv[1]['time'], vv[1]['locationName'])
           @occasions.push({TEST_KNOWLEGE: tk, TEST_DRIVING: td})
         end
+
       rescue => e
         puts "parse error: #{e}"
+        exit
       end
     end
 

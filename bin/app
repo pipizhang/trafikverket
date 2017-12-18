@@ -102,13 +102,11 @@ class MyApp
 
   def _print_table
     rows = []
-    n = 1
     data = @client.get_all
     puts "\e[H\e[2J" if data.length > 0
 
-    data.each do |v|
-      rows << [n, v[:TEST_KNOWLEGE].info, v[:TEST_KNOWLEGE].in_weeks, v[:TEST_DRIVING].info, v[:TEST_DRIVING].in_weeks]
-      n = n + 1
+    data.each_with_index do |v, k|
+      rows << [k+1, v[:TEST_KNOWLEGE].info, v[:TEST_KNOWLEGE].in_weeks, v[:TEST_DRIVING].info, v[:TEST_DRIVING].in_weeks]
     end
     table = Terminal::Table.new :headings => ['ID', 'Knowlege', 'Weeks', 'Driving', 'Weeks'], :rows => rows
 
