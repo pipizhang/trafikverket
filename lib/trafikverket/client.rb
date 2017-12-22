@@ -14,16 +14,22 @@ module Trafikverket
     end
 
     def request(post_data)
-      response = Excon.post(
-        @endpoint,
-        :body => post_data,
-        :headers => {
-          "Content-Type" => "application/json",
-          "X-Requested-With" => "XMLHttpRequest",
-          "User-Agent" => @user_agent
-        }
-      )
-      raw = response.status == 200 ? response.body : ""
+      raw = ""
+      begin
+        response = Excon.post(
+          @endpoint,
+          :body => post_data,
+          :headers => {
+            "Content-Type" => "application/json",
+            "X-Requested-With" => "XMLHttpRequest",
+            "User-Agent" => @user_agent
+          }
+        )
+        raw = response.body if response.status == 200
+      rescue => e
+        puts "[ERROR] http request error: #{e}"
+      end
+
       _parse(raw)
     end
 
@@ -46,8 +52,7 @@ module Trafikverket
         end
 
       rescue => e
-        puts "parse error: #{e}"
-        exit
+        puts "[ERROR] parse error: #{e}"
       end
     end
 
