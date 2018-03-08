@@ -18,6 +18,7 @@ module Trafikverket
     end
 
     def earlier_than?(date)
+      return false if @date.nil?
       date = Date.parse(date) if date.is_a?(String)
       Date.parse(@date) <= date
     end
@@ -27,7 +28,11 @@ module Trafikverket
     end
 
     def in_weeks
-      days = (Date.parse(@date) - Date.today).to_i
+      if @date.nil?
+        days = 0
+      else
+        days = (Date.parse(@date) - Date.today).to_i
+      end
       return (days.to_f / 7).ceil
     end
 

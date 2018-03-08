@@ -45,9 +45,16 @@ module Trafikverket
         end
 
         json['data'].each do |v|
-          vv = v['occasions']
-          tk = Examination.new(TEST_KNOWLEGE, vv[0]['date'], vv[0]['time'], vv[0]['locationName'])
-          td = Examination.new(TEST_DRIVING, vv[1]['date'], vv[1]['time'], vv[1]['locationName'])
+          td = Examination.new(TEST_DRIVING, nil, nil, nil)
+          tk = Examination.new(TEST_KNOWLEGE, nil, nil, nil)
+
+          v['occasions'].each do |vv|
+            if vv['name'].include? "Körprov"
+              td = Examination.new(TEST_DRIVING, vv['date'], vv['time'], vv['locationName'])
+            else
+              tk = Examination.new(TEST_KNOWLEGE, vv['date'], vv['time'], vv['locationName'])
+            end
+          end
           @occasions.push({TEST_KNOWLEGE: tk, TEST_DRIVING: td})
         end
 
