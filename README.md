@@ -18,8 +18,6 @@ Update settings
 ```bash
 cp config/env.example config/.env
 # then puts account settings to config/.env
-cp config/curl.example config/curl
-# then puts value of 'Copy as cURL' from Chrome browser to config/curl
 ```
 > Prerequisites: trafikverket.se account and Slack token
 
