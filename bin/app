@@ -45,7 +45,14 @@ class MyApp
           _notify(@input[:week])
 
           # wait...
-          sleep _interval
+          hour = Time.now.getutc.hour
+          if hour <= 4 or hour >= 22
+            puts "sleep #{_interval*5} [during 22 - 04 UTC]"
+            sleep _interval*5
+          else
+            puts "sleep #{_interval}"
+            sleep _interval
+          end
         end
       end
     end
