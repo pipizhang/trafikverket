@@ -28,7 +28,7 @@ module Trafikverket
         if response.status == 200
           raw = response.body
         else
-          raise RuntimeError "Remote Server returns #{response.status}"
+          raise RuntimeError.new "Remote Server returns #{response.status}"
         end
       rescue => e
         puts "[ERROR] http request error: #{e}"

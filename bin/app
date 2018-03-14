@@ -119,7 +119,7 @@ class MyApp
     title << (@@reqests > 0 ? " [REQUESTS #{@@reqests}]" : "")
     title << (@@notifications > 0 ? " [SLACK #{@@notifications}]" : "")
     puts title
-    puts (rows.length > 0 ? table : " No records")
+    puts (rows.length > 0 ? table : "* no records *")
     puts ""
     puts @ask_detail
     puts ""
