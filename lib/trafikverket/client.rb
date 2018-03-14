@@ -25,12 +25,16 @@ module Trafikverket
             "User-Agent" => @user_agent
           }
         )
-        raw = response.body if response.status == 200
+        if response.status == 200
+          raw = response.body
+        else
+          raise RuntimeError "Remote Server returns #{response.status}"
+        end
       rescue => e
         puts "[ERROR] http request error: #{e}"
       end
 
-      _parse(raw)
+      _parse(raw) if raw != ""
     end
 
     def _parse(content)
