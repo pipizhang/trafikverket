@@ -30,3 +30,8 @@ Start monitor
 ```bash
 $ make run
 ```
+
+Run tests
+```bash
+$ make test
+```
